@@ -1,200 +1,428 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>网站建设中 | dachengad.cn</title>
-  <meta name="description" content="dachengad.cn 正在建设中，敬请期待。" />
-  <style>
-    :root {
-      --bg: #0a0a0c;
-      --fg: #f4f4f5;
-      --muted: #9ca3af;
-      --accent: #22d3ee;
-      --accent-2: #a78bfa;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<title>大成广告装饰 · 户外灯牌 / 锦旗定制 / 图像喷绘｜兰陵县</title>
+<meta name="description" content="大成广告装饰，兰陵本地广告制作安装商：户外广告灯牌、门头招牌、室内锦旗定制、图像喷绘、围挡与警示牌。设计、制作、安装一体，电话 137 9390 0959。" />
+<meta name="keywords" content="兰陵广告公司,兰陵灯箱制作,门头招牌,锦旗定制,图像喷绘,喷绘写真,围挡广告,大成广告" />
+<meta name="author" content="大成广告装饰" />
+<meta name="theme-color" content="#0e0e10" />
+<link rel="canonical" href="https://dachengad.cn/" />
 
-    html,
-    body {
-      height: 100%;
-    }
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="大成广告装饰" />
+<meta property="og:locale" content="zh_CN" />
+<meta property="og:title" content="大成广告装饰 · 户外灯牌 / 锦旗定制 / 图像喷绘" />
+<meta property="og:description" content="本地广告制作安装：门头灯箱、锦旗、喷绘。设计、制作、安装一体，兰陵县当天响应。" />
+<meta property="og:url" content="https://dachengad.cn/" />
+<meta property="og:image" content="https://dachengad.cn/assets/img/og-cover.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
-        "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-      background: var(--bg);
-      color: var(--fg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      position: relative;
-    }
+<link rel="icon" href="favicon.ico" sizes="48x48" />
+<link rel="icon" type="image/png" href="assets/img/icon-192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="site.webmanifest" />
+<link rel="stylesheet" href="assets/css/styles.css" />
 
-    /* 背景光晕 */
-    body::before,
-    body::after {
-      content: "";
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(120px);
-      opacity: 0.35;
-      pointer-events: none;
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "大成广告装饰",
+  "alternateName": "大成广告",
+  "url": "https://dachengad.cn/",
+  "logo": "https://dachengad.cn/assets/img/logo.png",
+  "image": "https://dachengad.cn/assets/img/og-cover.jpg",
+  "telephone": "+86-137-9390-0959",
+  "email": "13793900959@163.com",
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "telephone": "+86-137-9390-0959",
+      "contactType": "customer service",
+      "areaServed": "CN",
+      "availableLanguage": "zh-CN"
+    },
+    {
+      "@type": "ContactPoint",
+      "telephone": "+86-134-6821-9876",
+      "contactType": "sales",
+      "areaServed": "CN",
+      "availableLanguage": "zh-CN"
     }
-
-    body::before {
-      width: 60vw;
-      height: 60vw;
-      background: var(--accent);
-      top: -25vw;
-      left: -20vw;
-      animation: drift 18s ease-in-out infinite alternate;
-    }
-
-    body::after {
-      width: 55vw;
-      height: 55vw;
-      background: var(--accent-2);
-      bottom: -25vw;
-      right: -15vw;
-      animation: drift 22s ease-in-out infinite alternate-reverse;
-    }
-
-    @keyframes drift {
-      from {
-        transform: translate3d(0, 0, 0) scale(1);
-      }
-      to {
-        transform: translate3d(6%, 8%, 0) scale(1.15);
-      }
-    }
-
-    main {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      padding: 32px 24px;
-      max-width: 640px;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 999px;
-      padding: 6px 14px;
-      margin-bottom: 28px;
-      backdrop-filter: blur(8px);
-    }
-
-    .badge .dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--accent);
-      animation: pulse 1.8s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%,
-      100% {
-        opacity: 1;
-        transform: scale(1);
-      }
-      50% {
-        opacity: 0.35;
-        transform: scale(0.8);
-      }
-    }
-
-    h1 {
-      font-size: clamp(2rem, 7vw, 3.5rem);
-      font-weight: 700;
-      line-height: 1.15;
-      letter-spacing: -0.02em;
-      background: linear-gradient(100deg, #fff 20%, var(--accent) 55%, var(--accent-2));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      margin-bottom: 18px;
-    }
-
-    p {
-      color: var(--muted);
-      font-size: clamp(0.95rem, 2.2vw, 1.08rem);
-      line-height: 1.75;
-    }
-
-    .progress {
-      width: min(320px, 78%);
-      height: 4px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.1);
-      margin: 36px auto 0;
-      overflow: hidden;
-    }
-
-    .progress span {
-      display: block;
-      height: 100%;
-      width: 40%;
-      border-radius: inherit;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      animation: load 2.4s ease-in-out infinite;
-    }
-
-    @keyframes load {
-      0% {
-        transform: translateX(-100%);
-      }
-      100% {
-        transform: translateX(350%);
-      }
-    }
-
-    footer {
-      position: absolute;
-      bottom: 24px;
-      left: 0;
-      right: 0;
-      text-align: center;
-      font-size: 12px;
-      color: rgba(255, 255, 255, 0.35);
-      letter-spacing: 0.05em;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        animation: none !important;
-      }
-    }
-  </style>
+  ],
+  "hasMap": "https://uri.amap.com/search?keyword=兰陵县大成广告公司&city=兰陵县&src=dachengad.cn&coordinate=gaode",
+  "foundingDate": "2012-02-27",
+  "priceRange": "¥¥",
+  "description": "兰陵县本地广告制作安装商，承接户外广告灯牌、门头招牌、锦旗定制、图像喷绘、围挡与安全警示牌，提供设计、制作、安装一体化服务。",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "卞庄街道中兴路北段44号",
+    "addressLocality": "兰陵县",
+    "addressRegion": "山东省临沂市",
+    "addressCountry": "CN"
+  },
+  "areaServed": [
+    { "@type": "City", "name": "兰陵县" }
+  ],
+  "makesOffer": [
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "户外广告灯牌与门头招牌制作" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "室内锦旗定制" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "图像喷绘与写真输出" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "展会特装与展位搭建" } }
+  ]
+}
+</script>
 </head>
+
 <body>
-  <main>
-    <div class="badge">
-      <span class="dot"></span>
-      UNDER CONSTRUCTION
+<a class="skip" href="#main">跳到主要内容</a>
+
+<header class="head" id="head">
+  <div class="head__in">
+    <a class="brand" href="#top" aria-label="大成广告装饰 首页">
+      <span class="brand__mark">大成</span>
+      <span class="brand__sub">广告装饰</span>
+    </a>
+    <nav class="nav" aria-label="主导航">
+      <a href="#services">业务</a>
+      <a href="#cases">案例</a>
+      <a href="#process">流程</a>
+      <a href="#studio">关于</a>
+    </nav>
+    <a class="head__call" href="tel:13793900959">
+      <span>137 9390 0959</span>
+    </a>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- 首屏 -->
+  <section class="hero" id="top">
+    <div class="hero__bg" aria-hidden="true">
+      <span class="hero__band"></span>
+      <span class="hero__stamp">大成</span>
     </div>
-    <h1>网站正在建设中</h1>
-    <p>
-      我们正在打磨更好的内容与体验，<br />
-      敬请期待。
-    </p>
-    <div class="progress"><span></span></div>
-  </main>
-  <footer>© 2026 dachengad.cn</footer>
+
+    <div class="hero__body">
+      <p class="eyebrow eyebrow--light" data-reveal>兰陵 · 广告制作安装</p>
+      <h1 class="hero__title" data-reveal>
+        招牌做出来，<br />生意看得见。
+      </h1>
+      <p class="hero__lede" data-reveal>
+        户外灯牌、锦旗、喷绘一站式制作。上门测量、出图打样、制作安装，本地当天响应。
+      </p>
+      <div class="hero__actions" data-reveal>
+        <a class="btn btn--accent" href="tel:13793900959">
+          电话咨询 137 9390 0959
+        </a>
+        <a class="btn btn--ghost" href="#cases">看已完工的活</a>
+      </div>
+      <ul class="hero__tags" data-reveal>
+        <li>门头灯箱</li>
+        <li>发光字 · 金属字</li>
+        <li>锦旗牌匾</li>
+        <li>喷绘写真</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 业务 -->
+  <section class="section services" id="services">
+    <div class="wrap">
+      <header class="section__head" data-reveal>
+        <p class="eyebrow">业务范围</p>
+        <h2 class="section__title">三件主活，<br />做到能交差。</h2>
+        <p class="section__lede">
+          设计、制作、安装都在自己手里，出问题不用来回推。
+        </p>
+      </header>
+
+      <ol class="svc">
+        <li class="svc__item" data-reveal>
+          <p class="svc__no">01</p>
+          <div class="svc__main">
+            <h3>户外广告灯牌</h3>
+            <p>门头招牌、亚克力发光字、金属字、电子屏、围挡与安全警示牌。现场测量后按墙体结构定方案。</p>
+          </div>
+          <ul class="svc__meta">
+            <li>现场测量</li>
+            <li>结构加固</li>
+            <li>夜间点亮调试</li>
+          </ul>
+        </li>
+
+        <li class="svc__item" data-reveal>
+          <p class="svc__no">02</p>
+          <div class="svc__main">
+            <h3>室内锦旗定制</h3>
+            <p>烫金锦旗、荣誉牌匾、文化墙与科室标识。文字排版先出样确认，避免做完再改。</p>
+          </div>
+          <ul class="svc__meta">
+            <li>当日出样</li>
+            <li>烫金 / 丝印</li>
+            <li>加急可当日取</li>
+          </ul>
+        </li>
+
+        <li class="svc__item" data-reveal>
+          <p class="svc__no">03</p>
+          <div class="svc__main">
+            <h3>图像喷绘</h3>
+            <p>大型喷绘、写真海报、车贴与围挡画面。高清写真机输出，户外用耐候墨水，久晒不褪。</p>
+          </div>
+          <ul class="svc__meta">
+            <li>高清写真</li>
+            <li>户外耐候</li>
+            <li>安装到位</li>
+          </ul>
+        </li>
+      </ol>
+
+      <p class="svc__note" data-reveal>
+        另承接展会特装搭建、广告设计印刷、广告发布、室内外装饰、建筑工程施工与劳务分包。
+      </p>
+    </div>
+  </section>
+
+  <!-- 案例 -->
+  <section class="section work" id="cases">
+    <div class="wrap">
+      <header class="section__head" data-reveal>
+        <p class="eyebrow">已完成交付</p>
+        <h2 class="section__title">做过的活，<br />自己会说话。</h2>
+        <p class="section__lede">门头、锦旗、宣传栏、文化墙，还有展会特装，都是现场实拍。</p>
+      </header>
+    </div>
+
+    <div class="grid" data-reveal>
+      <figure class="tile">
+        <img src="assets/img/case-expo-1.jpg" width="1280" height="960" loading="lazy" decoding="async"
+          alt="市农业农村局展会特装展台，红色发光字门头与大型LED屏" />
+        <figcaption><span>展会特装</span>市农业农村局 · 展台搭建</figcaption>
+      </figure>
+
+      <figure class="tile">
+        <img src="assets/img/case-luosifen.jpg" width="1280" height="960" loading="lazy" decoding="async"
+          alt="螺小转螺蛳粉门头喷绘招牌，红色底板配品牌字体" />
+        <figcaption><span>门头喷绘</span>螺小转 · 餐饮门头</figcaption>
+      </figure>
+
+      <figure class="tile">
+        <img src="assets/img/case-pingpong.jpg" width="1280" height="960" loading="lazy" decoding="async"
+          alt="谦望乒乓运动中心门头灯箱招牌，橙色铝塑板底板" />
+        <figcaption><span>门头灯箱</span>谦望乒乓 · 运动中心</figcaption>
+      </figure>
+
+      <figure class="tile">
+        <img src="assets/img/case-expo-2.jpg" width="1280" height="960" loading="lazy" decoding="async"
+          alt="产自临沂展会环形吊顶展位，灯箱墙面与农产图片灯片" />
+        <figcaption><span>展会特装</span>产自临沂 · 环形展位</figcaption>
+      </figure>
+
+      <figure class="tile">
+        <img src="assets/img/case-pennant.jpg" width="1280" height="1707" loading="lazy" decoding="async"
+          alt="红色烫金锦旗，金色流苏与烫金文字" />
+        <figcaption><span>锦旗定制</span>烫金锦旗 · 送赠留念</figcaption>
+      </figure>
+
+      <figure class="tile">
+        <img src="assets/img/case-board.jpg" width="1280" height="960" loading="lazy" decoding="async"
+          alt="校园园区大型宣传栏，金属框架与整幅喷绘版面" />
+        <figcaption><span>园区展示牌</span>校园宣传栏 · 荣誉榜</figcaption>
+      </figure>
+
+      <figure class="tile">
+        <img src="assets/img/case-expo-3.jpg" width="1280" height="960" loading="lazy" decoding="async"
+          alt="生态沂蒙山农产品展区特装，绿色墙板与灯箱图版" />
+        <figcaption><span>展会特装</span>生态沂蒙山 · 农产品展区</figcaption>
+      </figure>
+
+      <figure class="tile">
+        <img src="assets/img/case-culture.jpg" width="1280" height="960" loading="lazy" decoding="async"
+          alt="医院室内文化墙，圆形亚克力造型与标语版面" />
+        <figcaption><span>室内文化墙</span>医院科室 · 文化展示</figcaption>
+      </figure>
+
+      <figure class="tile">
+        <img src="assets/img/case-kids.jpg" width="1280" height="960" loading="lazy" decoding="async"
+          alt="幼儿园园区立体标识与景观石，蓝色底座与白色立体字" />
+        <figcaption><span>立体标识</span>幼儿园 · 园区成果栏</figcaption>
+      </figure>
+
+      <div class="tile tile--empty">
+        <p>广告设计稿</p>
+        <span>展示位预留</span>
+      </div>
+      <div class="tile tile--empty">
+        <p>车贴 · 围挡画面</p>
+        <span>展示位预留</span>
+      </div>
+      <div class="tile tile--empty">
+        <p>门头施工细节</p>
+        <span>展示位预留</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 流程 -->
+  <section class="section process" id="process">
+    <div class="wrap">
+      <header class="section__head section__head--light" data-reveal>
+        <p class="eyebrow eyebrow--light">怎么做</p>
+        <h2 class="section__title">四步，<br />把图做成实物。</h2>
+      </header>
+
+      <ol class="steps">
+        <li data-reveal>
+          <span>01</span>
+          <h3>沟通需求</h3>
+          <p>说清楚用在哪、看多远、要不要亮，顺带把预算框出来。</p>
+        </li>
+        <li data-reveal>
+          <span>02</span>
+          <h3>现场测量</h3>
+          <p>上门量尺寸、看墙体与电源，定安装方式。</p>
+        </li>
+        <li data-reveal>
+          <span>03</span>
+          <h3>设计打样</h3>
+          <p>出排版稿与材质样，确认无误再开工。</p>
+        </li>
+        <li data-reveal>
+          <span>04</span>
+          <h3>制作安装</h3>
+          <p>车间制作、车辆运输、现场安装，通电验收。</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 关于 -->
+  <section class="section studio" id="studio">
+    <div class="wrap studio__in">
+      <div class="studio__text" data-reveal>
+        <p class="eyebrow">关于我们</p>
+        <h2 class="section__title">一家在兰陵，<br />把活干完的广告店。</h2>
+        <p>
+          大成广告装饰成立于 2012 年，做广告设计、制作、安装，也做室内外装饰。
+          门头灯箱、锦旗牌匾、喷绘写真、围挡与警示牌都在业务范围内。
+        </p>
+        <p>
+          从测量到通电验收由同一拨人负责，改稿、加急、补做都找得到人。
+        </p>
+        <a class="link" href="https://www.tianyancha.com/company/3453072289" target="_blank" rel="noopener">
+          查看工商登记信息
+        </a>
+      </div>
+
+      <dl class="facts" data-reveal>
+        <div>
+          <dt>成立时间</dt>
+          <dd>2012 年</dd>
+        </div>
+        <div>
+          <dt>服务范围</dt>
+          <dd>兰陵县全域</dd>
+        </div>
+        <div>
+          <dt>作业方式</dt>
+          <dd>设计 · 制作 · 安装</dd>
+        </div>
+        <div>
+          <dt>公司类型</dt>
+          <dd>广告服务 / 装饰</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- 联系 -->
+  <section class="contact" id="contact">
+    <div class="wrap contact__in">
+      <div data-reveal>
+        <p class="eyebrow eyebrow--light">联系方式</p>
+        <h2 class="contact__title">先说尺寸，<br />再说价格。</h2>
+        <a class="contact__tel" href="tel:13793900959">137 9390 0959</a>
+        <p class="contact__alt">
+          备用联系 <a href="tel:13468219876">1346 821 9876</a>
+        </p>
+        <p class="contact__note">电话直接接通，可加微信发门头照片，先给方案再谈价。</p>
+        <div class="contact__cta">
+          <a class="btn btn--accent" href="tel:13793900959">拨打电话</a>
+          <a class="btn btn--ghost" data-nav="兰陵县大成广告公司"
+            href="https://uri.amap.com/search?keyword=兰陵县大成广告公司&city=兰陵县&src=dachengad.cn&coordinate=gaode&callnative=1"
+            target="_blank" rel="noopener">导航到门店</a>
+        </div>
+      </div>
+
+      <dl class="contact__info" data-reveal>
+        <div>
+          <dt>门店地址</dt>
+          <dd>
+            山东省临沂市兰陵县<br />卞庄街道中兴路北段 44 号
+          </dd>
+          <dd class="maps">
+            <span>地图导航</span>
+            <a href="https://uri.amap.com/search?keyword=兰陵县大成广告公司&city=兰陵县&src=dachengad.cn&coordinate=gaode&callnative=1"
+              target="_blank" rel="noopener">高德</a>
+            <a href="https://api.map.baidu.com/place/search?query=兰陵县大成广告公司&region=兰陵县&output=html&src=dachengad.cn"
+              target="_blank" rel="noopener">百度</a>
+            <a href="https://apis.map.qq.com/uri/v1/search?keyword=兰陵县大成广告公司&region=兰陵&referer=dachengad.cn"
+              target="_blank" rel="noopener">腾讯</a>
+          </dd>
+        </div>
+        <div>
+          <dt>营业时间</dt>
+          <dd>周一至周日 08:00–19:00<br />加急件可预约晚间</dd>
+        </div>
+        <div>
+          <dt>承接区域</dt>
+          <dd>兰陵县全域，含各乡镇</dd>
+        </div>
+        <div>
+          <dt>微信 · 同手机号</dt>
+          <dd>
+            <ul class="wx">
+              <li>
+                <img src="assets/img/wechat-main.jpg" width="176" height="176" loading="lazy"
+                  alt="大成广告红色微信头像" />
+                <span>137 9390 0959</span>
+              </li>
+              <li>
+                <img src="assets/img/wechat-second.jpg" width="176" height="176" loading="lazy"
+                  alt="蓝色微信头像，第二联系人" />
+                <span>1346 821 9876</span>
+              </li>
+            </ul>
+          </dd>
+        </div>
+        <div>
+          <dt>邮箱</dt>
+          <dd><a class="contact__link" href="mailto:13793900959@163.com">13793900959@163.com</a></dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__in">
+    <p class="foot__brand">大成广告装饰</p>
+    <p class="foot__legal">山东 · 兰陵县卞庄街道中兴路北段 44 号</p>
+    <p class="foot__copy">© <span id="year">2026</span> dachengad.cn</p>
+  </div>
+</footer>
+
+<a class="callbar" href="tel:13793900959">
+  <span>电话咨询</span>
+  <strong>137 9390 0959</strong>
+</a>
+
+<script src="assets/js/main.js" defer></script>
 </body>
 </html>

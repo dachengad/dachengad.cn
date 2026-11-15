@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dachengad.cn/sitemap.xml

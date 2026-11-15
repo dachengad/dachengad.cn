@@ -1,142 +1,200 @@
-# dachengad.cn
+# dachengad.cn · 大成广告装饰官网
 
-大成广告官网 · 纯静态站点
+兰陵县本地广告制作安装商的官方网站：户外广告灯牌、室内锦旗定制、图像喷绘、展会特装搭建。
 
-当前状态：**建设中**（`index.html` 为占位页）
+纯静态站点，零构建、零依赖，推送到 `main` 即自动部署。
+
+- 仓库：<https://github.com/dachengad/dachengad.cn>
+- 线上预览：<https://dachengad.github.io/dachengad.cn/>
+- 正式域名：`dachengad.cn`（待绑定，见「上线待办」）
 
 ---
 
-## 1. 项目定位
+## 1. 业务信息
 
 | 项 | 内容 |
 | --- | --- |
-| 站点域名 | dachengad.cn |
-| 业务方向 | 广告 / 营销服务公司官网 |
-| 核心目标 | 让潜在客户在 30 秒内看懂「我们做什么」并产生咨询 |
-| 目标用户 | 有品牌推广、投放、内容营销需求的中小企业主与市场负责人 |
-| 转化路径 | 首页 → 服务/案例 → 联系我们（表单 / 电话 / 微信） |
+| 品牌名 | 大成广告装饰 |
+| 主营 | 户外广告灯牌 / 门头招牌、室内锦旗定制、图像喷绘、展会特装 |
+| 服务范围 | 兰陵县全域（含各乡镇） |
+| 主电话 | 137 9390 0959（微信同号，红色头像） |
+| 备用电话 | 1346 821 9876（微信同号，蓝色头像） |
+| 邮箱 | 13793900959@163.com |
+| 门店地址 | 山东省临沂市兰陵县卞庄街道中兴路北段 44 号 |
+| 营业时间 | 周一至周日 08:00–19:00 |
+| 成立时间 | 2012-02-27 |
 
-### 设计原则
-
-- 首屏即价值主张，不做过场动画堆砌
-- 案例优先于口号，用作品说话
-- 移动端优先，弱网可读
-- 单一主行动按钮（免费咨询），全站复用
+> 以上信息在页面上出现在：联系区、页脚、以及 `index.html` 里的 JSON-LD 结构化数据。改信息时三处要一起改。
 
 ---
 
-## 2. 信息架构
+## 2. 页面结构
 
-```
-/                    首页
-├─ /services         服务介绍（投放 / 品牌 / 内容 / 短视频）
-├─ /cases            客户案例列表
-│   └─ /cases/{slug} 单个案例详情
-├─ /about            关于我们（团队、理念、资质）
-├─ /contact          联系我们（表单、地图、联系方式）
-└─ /blog             行业观察（可选，第二阶段）
-```
+单页站点，锚点导航：
 
-### 各页面目标
-
-| 页面 | 目标 | 核心模块 |
+| 区块 | 锚点 | 内容 |
 | --- | --- | --- |
-| 首页 | 建立信任、引导咨询 | Hero 主张、核心服务、精选案例、客户 Logo、数据背书、CTA |
-| 服务 | 讲清能力边界与交付方式 | 服务卡片、流程四步（沟通→方案→执行→复盘）、报价区间说明 |
-| 案例 | 证明效果 | 行业筛选、案例卡片、单页含背景/策略/执行/结果 |
-| 关于 | 消除「小作坊」疑虑 | 团队、办公环境、资质与客户评价 |
-| 联系 | 降低咨询门槛 | 表单、电话、微信二维码、办公地址、响应时效说明 |
+| 首屏 | `#top` | 品牌、主标题、电话 CTA、业务标签 |
+| 业务 | `#services` | 三项主业务（灯牌 / 锦旗 / 喷绘）+ 其他承接说明 |
+| 案例 | `#cases` | 9 张现场实拍 + 3 个预留展示位 |
+| 流程 | `#process` | 沟通 → 测量 → 打样 → 安装 |
+| 关于 | `#studio` | 公司介绍、成立时间、服务范围、工商信息外链 |
+| 联系 | `#contact` | 电话、备用电话、微信（双头像）、邮箱、地址、地图导航 |
+
+移动端（≤680px）底部常驻「电话 + 号码」拨打条。
 
 ---
 
-## 3. 内容规划
-
-需要业务方提供，缺失时先用占位内容并标注 `TODO`：
-
-- [ ] 公司一句话介绍（≤ 30 字）
-- [ ] 3–6 个核心服务及各自卖点
-- [ ] 6–12 个案例（客户名可脱敏，需含数据结果）
-- [ ] 合作客户 Logo 授权
-- [ ] 团队照片、办公环境照片
-- [ ] 联系方式：电话、邮箱、微信、地址
-- [ ] 公司资质 / 荣誉
-- [ ] 备案号（ICP）
-
-> 素材统一放在 `assets/`，图片建议 WebP，单张 ≤ 300KB。
-
----
-
-## 4. 技术方案
-
-**纯静态：HTML + CSS + 原生 JS，零构建、零依赖。**
-
-- 不使用框架与打包工具，每个页面为独立 `.html`
-- 样式集中在一个 `styles.css`，用 CSS 变量管理主题色
-- 交互仅用少量原生 JS（移动端菜单、案例筛选、表单校验）
-- 可后续平滑迁移到 Astro，目录结构保持不变
-
-### 目录结构（规划）
+## 3. 目录结构
 
 ```
-.
-├─ index.html            首页 / 当前为建设中占位页
-├─ services.html
-├─ cases.html
-├─ case-detail.html      后期可改为 /cases/{slug}.html
-├─ about.html
-├─ contact.html
+dachengad/                     ← 仓库根目录
+├─ index.html                  整站页面（含 SEO meta 与 JSON-LD）
 ├─ assets/
-│   ├─ css/styles.css
-│   ├─ js/main.js
-│   └─ img/
+│   ├─ css/styles.css          全部样式，主题色集中在 :root
+│   ├─ js/main.js              滚动进场、固定导航、系统地图唤起
+│   └─ img/                    处理后的图片（jpg + webp 双份）
+├─ favicon.ico                 浏览器标签图标（蓝色微信头像）
+├─ site.webmanifest            PWA / 添加到桌面图标配置
+├─ robots.txt
+├─ sitemap.xml
 ├─ README.md
-└─ .screenshots/          预览截图（开发用，不部署）
+└─ .github/workflows/pages.yml GitHub Pages 自动部署
 ```
 
-### 规范约定
-
-- 命名：文件小写中划线（`case-detail.html`），类名 BEM 简化写法
-- 语义化标签：`header / nav / main / section / footer`
-- 每个页面独立设置 `<title>` 与 `<meta name="description">`
-- 主题色集中在 `:root` 变量，改一处全站生效
-- 动效遵从 `prefers-reduced-motion`
+素材原图放在仓库外的 `../素材/`（即 `E:\GitHub\网站\dachengad.cn\素材\`），按业务分类建子目录；仓库里只放压缩后的成品图。
 
 ---
 
-## 5. 实施路线
+## 4. 设计规范
 
-| 阶段 | 内容 | 产出 |
+### 配色（取自门头招牌）
+
+| 变量 | 值 | 用途 |
 | --- | --- | --- |
-| P0（已完成） | 建设中占位页 | `index.html` |
-| P1 | 首页完整版（Hero + 服务 + 案例预览 + CTA） | 可上线的最小官网 |
-| P2 | 服务页 + 案例列表/详情页 | 完整业务闭环 |
-| P3 | 关于页 + 联系页（表单） | 全站上线 |
-| P4 | SEO、站点地图、性能优化、备案 | 可推广状态 |
+| `--accent` | `#c8171f` | 招牌红：按钮、色块、强调 |
+| `--accent-strong` | `#a31118` | 按钮 hover |
+| `--accent-soft` | `#ff6a6d` | 深色底上的强调文字 |
+| `--ink` | `#101012` | 深色区背景 |
+| `--paper` | `#f7f5f0` | 浅色区背景 |
+| `--text` / `--text-soft` | `#17171a` / `#5d5b56` | 正文 / 次要文字 |
 
-### 各阶段验收要点
+改主题只动 `assets/css/styles.css` 顶部的 `:root`。
 
-- P1：首屏 3 秒内可见主张；移动端无横向滚动
-- P2：案例页可筛选；详情页结构统一
-- P3：表单可提交（先用第三方服务或邮件转发）
-- P4：Lighthouse 性能/SEO ≥ 90；提交 sitemap
+### 排版与动效
 
----
-
-## 6. 部署
-
-纯静态站点，可直接托管于任意静态服务器 / CDN：
-
-1. 上传仓库根目录文件（排除 `.screenshots/`）
-2. 配置 `index.html` 为默认首页
-3. 开启 HTTPS，强制跳转 `https://dachengad.cn`
-4. 上线前补齐 ICP 备案号并置于页脚
+- 无外链字体，走系统中文字体栈，弱网也能即时渲染
+- 字重靠 800/900 建立层级，标题使用负字距
+- 进场动画：`[data-reveal]` + `IntersectionObserver`，逐个上浮
+- 全站遵从 `prefers-reduced-motion`，开启后关闭动画
 
 ---
 
-## 7. 待确认事项
+## 5. 图片规范
 
-- [ ] 公司正式名称与一句话主张
-- [ ] 主色 / 品牌视觉（当前占位页使用青紫渐变，可替换）
-- [ ] 是否需要在线表单后端（第三方表单服务 / 企业微信 / 邮件）
-- [ ] 是否保留博客栏目
-- [ ] 域名与服务器归属、备案进度
+线上图片统一放在 `assets/img/`，命名与用途：
+
+| 文件 | 内容 | 尺寸 |
+| --- | --- | --- |
+| `case-luosifen` | 螺小转门头喷绘 | 1280×960 |
+| `case-pingpong` | 谦望乒乓门头灯箱 | 1280×960 |
+| `case-pennant` | 烫金锦旗 | 1280×1707 |
+| `case-board` | 校园宣传栏 | 1280×960 |
+| `case-culture` | 医院文化墙 | 1280×960 |
+| `case-kids` | 幼儿园立体标识 | 1280×960 |
+| `case-expo-1/2/3` | 展会特装 | 1280×960 |
+| `wechat-main` / `wechat-second` | 微信头像 | 176×176 |
+| `og-cover` | 社交分享封面 | 1200×630 |
+
+处理规则：
+
+1. **不裁剪构图**，只做等比缩放；需要适配版式时用 CSS `object-fit` 处理
+2. 手机号、门头 TEL、水印面板（工程记录 / 今日水印）一律**高斯模糊**，不裁掉
+3. 每张同时导出 `jpg`（quality 82）与 `webp`（quality 80），页面用 `<picture>` 引用
+4. 案例图统一 4:3，`loading="lazy"` + 显式 `width/height` 防止布局抖动
+
+### 替换预留展示位
+
+案例区最后三个 `.tile--empty` 是留给「广告设计成品图」的。补图时把整块替换成：
+
+```html
+<figure class="tile">
+  <img src="assets/img/case-design-1.jpg" width="1280" height="960"
+       loading="lazy" decoding="async" alt="图片说明" />
+  <figcaption><span>广告设计</span>项目名称</figcaption>
+</figure>
+```
+
+---
+
+## 6. 本地预览
+
+任选一种，无需安装依赖：
+
+```bash
+# Python（推荐，项目里已有环境）
+python -m http.server 8899
+
+# 或 Node
+npx serve .
+```
+
+然后打开 <http://127.0.0.1:8899/>。直接双击 `index.html` 也能看，但 `site.webmanifest`、`robots.txt` 这类文件需要 HTTP 环境才生效。
+
+---
+
+## 7. 部署
+
+已配置 GitHub Pages + Actions：**push 到 `main` 自动发布**，也可在 Actions 页手动触发 `Deploy to GitHub Pages`。
+
+首次部署需在仓库 `Settings → Pages → Source` 选择 `GitHub Actions`（已启用）。
+
+### 绑定自有域名
+
+1. 仓库 `Settings → Pages → Custom domain` 填 `dachengad.cn`，勾选 `Enforce HTTPS`
+2. DNS 添加记录（域名服务商处）：
+   - `A` → `185.199.108.153` / `185.199.109.153` / `185.199.110.153` / `185.199.111.153`
+   - `www` 用 `CNAME` → `dachengad.github.io`
+3. 生效后把页面里 `canonical` / `og:url` / `sitemap.xml` 的域名确认改为 `https://dachengad.cn/`
+
+---
+
+## 8. SEO 现状
+
+已做：
+
+- 独立 `<title>`、`description`、`keywords`、`canonical`
+- Open Graph / Twitter 分享卡（`og-cover.jpg`）
+- `LocalBusiness` 结构化数据：名称、logo、电话、两个 `contactPoint`、邮箱、成立日期、地址、`areaServed`、`hasMap`、`makesOffer`
+- `robots.txt` 放行全部 + 指向 sitemap
+- `sitemap.xml`（单页）
+- `favicon.ico` / `apple-touch-icon` / PWA manifest
+
+### 提交搜索引擎（需人工操作）
+
+1. [百度搜索资源平台](https://ziyuan.baidu.com) 添加站点 → 验证 → 提交 `https://dachengad.cn/sitemap.xml`
+2. 「站点属性」填写站点名称「大成广告装饰」并上传 logo → 搜索结果标题旁显示图标
+3. 想出现企业名片 / 电话卡，需走「企业名片」营业执照认证
+4. 谷歌：[Google Search Console](https://search.google.com/search-console) 添加资源 → 提交 sitemap
+
+> 百度结果里的「站点多子链」需要多个可抓取页面 + 站点权重积累，单页站点一般不会出现；要争取这个位置，可把服务 / 案例 / 关于 / 联系拆成独立页面。
+
+---
+
+## 9. 上线待办
+
+- [ ] 绑定 `dachengad.cn` 并开启 HTTPS
+- [ ] 补 ICP 备案号并写入页脚
+- [ ] 替换 3 个预留展示位为真实广告设计成品图
+- [ ] 百度 / 谷歌站长平台验证与 sitemap 提交
+- [ ] 视情况把单页拆成多页（提升抓取面与子链机会）
+
+---
+
+## 10. 开发约定
+
+- 文件命名：小写中划线；图片 `case-{项目}.jpg`
+- 类名：简化 BEM（`section__title`、`tile--empty`）
+- 语义标签：`header / nav / main / section / footer`，一键回到主内容有 `.skip`
+- 改颜色只改 CSS 变量；改联系方式同步 HTML、页脚、JSON-LD 三处
+- 提交前本地过一遍：手机视口（375px）无横向滚动、图片无 404
