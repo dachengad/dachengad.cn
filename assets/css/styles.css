@@ -186,6 +186,7 @@ a { color: inherit; text-decoration: none; }
   display: flex;
   align-items: center;
   gap: 10px;
+  margin-right: auto;
   color: #fff;
 }
 .brand__mark {
@@ -209,7 +210,6 @@ a { color: inherit; text-decoration: none; }
 .nav {
   display: flex;
   gap: 28px;
-  margin-left: auto;
 }
 .nav a {
   position: relative;
@@ -233,6 +233,8 @@ a { color: inherit; text-decoration: none; }
 }
 .nav a:hover { color: #fff; }
 .nav a:hover::after { transform: scaleX(1); }
+.nav a.is-active { color: #fff; }
+.nav a.is-active::after { transform: scaleX(1); }
 
 .head__call {
   font-size: 14px;
@@ -250,9 +252,9 @@ a { color: inherit; text-decoration: none; }
 .head__menu {
   display: none;
   position: relative;
+  flex: 0 0 auto;
   width: 44px;
   height: 44px;
-  margin-left: auto;
   padding: 0;
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.26);
@@ -284,6 +286,8 @@ a { color: inherit; text-decoration: none; }
   background: rgba(9, 9, 11, 0.97);
   backdrop-filter: blur(14px);
   overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   opacity: 0;
   transition: opacity 0.25s var(--ease);
 }
@@ -314,6 +318,7 @@ a { color: inherit; text-decoration: none; }
   color: var(--accent-soft);
 }
 .mnav__list a:active { color: var(--accent-soft); }
+.mnav__list a.is-active { color: var(--accent-soft); }
 
 .mnav__foot {
   margin-top: auto;
@@ -945,8 +950,7 @@ body.lb-open { overflow: hidden; }
 
 @media (max-width: 900px) {
   .nav { display: none; }
-  .head__menu { display: block; margin-left: 12px; }
-  .head__call { margin-left: auto; }
+  .head__menu { display: block; }
   .studio__in,
   .contact__in { grid-template-columns: 1fr; }
   .grid { grid-template-columns: repeat(2, 1fr); }

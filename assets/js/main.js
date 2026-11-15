@@ -24,22 +24,22 @@
 
   if (menuBtn && mnav) {
     let hideTimer = 0;
+    const isMenuOpen = () => mnav.classList.contains("is-open");
 
     const openMenu = () => {
       window.clearTimeout(hideTimer);
       mnav.hidden = false;
+      void mnav.offsetHeight; // 强制回流，保证淡入过渡生效
+      mnav.classList.add("is-open");
       document.body.classList.add("nav-open");
       if (head) head.classList.add("is-menu");
       menuBtn.classList.add("is-open");
       menuBtn.setAttribute("aria-expanded", "true");
       menuBtn.setAttribute("aria-label", "关闭导航");
-      requestAnimationFrame(() => mnav.classList.add("is-open"));
-      const first = mnav.querySelector("a");
-      if (first) first.focus({ preventScroll: true });
     };
 
     const closeMenu = () => {
-      if (mnav.hidden) return;
+      if (!isMenuOpen()) return;
       mnav.classList.remove("is-open");
       menuBtn.classList.remove("is-open");
       menuBtn.setAttribute("aria-expanded", "false");
@@ -48,12 +48,13 @@
       if (head) head.classList.remove("is-menu");
       hideTimer = window.setTimeout(() => {
         mnav.hidden = true;
-      }, 250);
+      }, 260);
     };
 
-    menuBtn.addEventListener("click", () => {
-      if (mnav.hidden) openMenu();
-      else closeMenu();
+    menuBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (isMenuOpen()) closeMenu();
+      else openMenu();
     });
 
     // 点任意锚点后收起菜单（默认跳转在事件之后执行，不会被滚动锁挡住）
@@ -62,7 +63,7 @@
     });
 
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeMenu();
+      if (e.key === "Escape" && isMenuOpen()) closeMenu();
     });
 
     window.addEventListener(
@@ -99,7 +100,35 @@
     }
   }
 
-  /* ---------- 4. 导航按钮：优先调用系统内置地图 ---------- */
+  /* ---------- 4. 导航高亮：滚到哪个区块就点亮对应入口 ---------- */
+  const navAnchors = document.querySelectorAll('.nav a[href^="#"], .mnav__list a[href^="#"]');
+  const spySections = document.querySelectorAll("main section[id]");
+
+  if (navAnchors.length && spySections.length && "IntersectionObserver" in window) {
+    const linksById = new Map();
+    navAnchors.forEach((link) => {
+      const id = link.getAttribute("href").slice(1);
+      if (!linksById.has(id)) linksById.set(id, []);
+      linksById.get(id).push(link);
+    });
+
+    const spy = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          navAnchors.forEach((link) => link.classList.remove("is-active"));
+          (linksById.get(entry.target.id) || []).forEach((link) =>
+            link.classList.add("is-active")
+          );
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px" }
+    );
+
+    spySections.forEach((section) => spy.observe(section));
+  }
+
+  /* ---------- 5. 导航按钮：优先调用系统内置地图 ---------- */
   const navLinks = document.querySelectorAll("[data-nav]");
 
   if (navLinks.length) {
@@ -123,7 +152,7 @@
     });
   }
 
-  /* ---------- 5. 案例大图：缩略图先显示，清晰图按需加载 ---------- */
+  /* ---------- 6. 案例大图：缩略图先显示，清晰图按需加载 ---------- */
   const lb = document.getElementById("lb");
 
   if (lb) {
@@ -209,7 +238,7 @@
     });
   }
 
-  /* ---------- 6. 页脚年份 ---------- */
+  /* ---------- 7. 页脚年份 ---------- */
   const year = document.getElementById("year");
   if (year) year.textContent = new Date().getFullYear();
 })();
