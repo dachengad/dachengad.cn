@@ -18,7 +18,63 @@
     window.addEventListener("resize", syncHead, { passive: true });
   }
 
-  /* ---------- 2. 滚动进场 ---------- */
+  /* ---------- 2. 移动端全屏菜单 ---------- */
+  const menuBtn = document.getElementById("menuBtn");
+  const mnav = document.getElementById("mnav");
+
+  if (menuBtn && mnav) {
+    let hideTimer = 0;
+
+    const openMenu = () => {
+      window.clearTimeout(hideTimer);
+      mnav.hidden = false;
+      document.body.classList.add("nav-open");
+      if (head) head.classList.add("is-menu");
+      menuBtn.classList.add("is-open");
+      menuBtn.setAttribute("aria-expanded", "true");
+      menuBtn.setAttribute("aria-label", "关闭导航");
+      requestAnimationFrame(() => mnav.classList.add("is-open"));
+      const first = mnav.querySelector("a");
+      if (first) first.focus({ preventScroll: true });
+    };
+
+    const closeMenu = () => {
+      if (mnav.hidden) return;
+      mnav.classList.remove("is-open");
+      menuBtn.classList.remove("is-open");
+      menuBtn.setAttribute("aria-expanded", "false");
+      menuBtn.setAttribute("aria-label", "打开导航");
+      document.body.classList.remove("nav-open");
+      if (head) head.classList.remove("is-menu");
+      hideTimer = window.setTimeout(() => {
+        mnav.hidden = true;
+      }, 250);
+    };
+
+    menuBtn.addEventListener("click", () => {
+      if (mnav.hidden) openMenu();
+      else closeMenu();
+    });
+
+    // 点任意锚点后收起菜单（默认跳转在事件之后执行，不会被滚动锁挡住）
+    mnav.addEventListener("click", (e) => {
+      if (e.target.closest("a")) closeMenu();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeMenu();
+    });
+
+    window.addEventListener(
+      "resize",
+      () => {
+        if (window.innerWidth > 900) closeMenu();
+      },
+      { passive: true }
+    );
+  }
+
+  /* ---------- 3. 滚动进场 ---------- */
   const revealItems = document.querySelectorAll("[data-reveal]");
 
   if (revealItems.length) {
@@ -43,7 +99,7 @@
     }
   }
 
-  /* ---------- 3. 导航按钮：优先调用系统内置地图 ---------- */
+  /* ---------- 4. 导航按钮：优先调用系统内置地图 ---------- */
   const navLinks = document.querySelectorAll("[data-nav]");
 
   if (navLinks.length) {
@@ -67,7 +123,7 @@
     });
   }
 
-  /* ---------- 4. 案例大图：缩略图先显示，清晰图按需加载 ---------- */
+  /* ---------- 5. 案例大图：缩略图先显示，清晰图按需加载 ---------- */
   const lb = document.getElementById("lb");
 
   if (lb) {
@@ -153,7 +209,7 @@
     });
   }
 
-  /* ---------- 5. 页脚年份 ---------- */
+  /* ---------- 6. 页脚年份 ---------- */
   const year = document.getElementById("year");
   if (year) year.textContent = new Date().getFullYear();
 })();
