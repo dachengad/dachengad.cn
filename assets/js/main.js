@@ -152,19 +152,50 @@
     });
   }
 
-  /* ---------- 6. 案例大图：缩略图先显示，清晰图按需加载 ---------- */
+  /* ---------- 6. 作品集：按类别筛选 ---------- */
+  const filters = document.getElementById("filters");
+
+  if (filters) {
+    const chips = Array.from(filters.querySelectorAll(".chip"));
+    const shots = Array.from(document.querySelectorAll(".shot"));
+    const count = document.getElementById("shotsCount");
+
+    const applyFilter = (cat) => {
+      let shown = 0;
+      shots.forEach((shot) => {
+        const show = cat === "all" || shot.dataset.cat === cat;
+        shot.hidden = !show;
+        if (show) shown += 1;
+      });
+      chips.forEach((chip) => {
+        const on = chip.dataset.cat === cat;
+        chip.classList.toggle("is-on", on);
+        chip.setAttribute("aria-pressed", String(on));
+      });
+      if (count) count.textContent = `共 ${shown} 张`;
+    };
+
+    chips.forEach((chip) => {
+      chip.addEventListener("click", () => applyFilter(chip.dataset.cat));
+    });
+  }
+
+  /* ---------- 7. 作品大图：缩略图先显示，清晰图按需加载 ---------- */
   const lb = document.getElementById("lb");
 
   if (lb) {
     const lbImg = lb.querySelector(".lb__img");
+    const lbSource = lb.querySelector(".lb__source");
     const lbThumb = lb.querySelector(".lb__thumb");
     const lbCap = lb.querySelector(".lb__cap");
     const lbClose = lb.querySelector(".lb__close");
+    const lbPrev = lb.querySelector(".lb__nav--prev");
+    const lbNext = lb.querySelector(".lb__nav--next");
     let lastFocus = null;
+    let current = null;
 
-    // 列表图路径 → 大图路径：assets/img/cases/x.jpg → assets/img/cases/full/x.webp
-    const fullSrc = (src) =>
-      src.replace("assets/img/cases/", "assets/img/cases/full/").replace(/\.jpg$/, ".webp");
+    const visibleFigs = () =>
+      Array.from(document.querySelectorAll("[data-lightbox]")).filter((fig) => !fig.hidden);
 
     const buildCaption = (fig) => {
       const cap = fig.querySelector("figcaption");
@@ -177,7 +208,8 @@
 
     const openLb = (fig) => {
       const img = fig.querySelector("img");
-      if (!img) return;
+      if (!img || !fig.dataset.full) return;
+      current = fig;
       lastFocus = fig;
 
       // 已缓存的缩略图立即铺上，避免白屏
@@ -190,7 +222,8 @@
         lbImg.classList.add("is-ready");
         lbThumb.classList.add("is-hidden");
       };
-      lbImg.src = fullSrc(img.getAttribute("src"));
+      if (lbSource) lbSource.srcset = `${fig.dataset.full}.webp`;
+      lbImg.src = `${fig.dataset.full}.jpg`;
 
       lbCap.textContent = buildCaption(fig);
 
@@ -200,9 +233,18 @@
       lbClose.focus({ preventScroll: true });
     };
 
+    const step = (dir) => {
+      const list = visibleFigs();
+      if (!list.length || !current) return;
+      let i = list.indexOf(current);
+      if (i < 0) i = 0;
+      openLb(list[(i + dir + list.length) % list.length]);
+    };
+
     const closeLb = () => {
       lb.classList.remove("is-open");
       document.body.classList.remove("lb-open");
+      current = null;
       window.setTimeout(() => {
         lb.hidden = true;
         lbImg.removeAttribute("src");
@@ -211,14 +253,13 @@
       if (lastFocus) lastFocus.focus({ preventScroll: true });
     };
 
-    document.querySelectorAll(".tile img").forEach((img) => {
-      const fig = img.closest(".tile");
-      if (!fig) return;
+    document.querySelectorAll("[data-lightbox]").forEach((fig) => {
+      const img = fig.querySelector("img");
+      if (!img) return;
 
-      fig.dataset.full = "";
       fig.setAttribute("role", "button");
       fig.tabIndex = 0;
-      fig.setAttribute("aria-label", `${img.alt || "案例"}，点击看大图`);
+      fig.setAttribute("aria-label", `${img.alt || "作品"}，点击看大图`);
 
       fig.addEventListener("click", () => openLb(fig));
       fig.addEventListener("keydown", (e) => {
@@ -229,16 +270,21 @@
       });
     });
 
+    if (lbPrev) lbPrev.addEventListener("click", () => step(-1));
+    if (lbNext) lbNext.addEventListener("click", () => step(1));
     lbClose.addEventListener("click", closeLb);
     lb.addEventListener("click", (e) => {
       if (e.target === lb) closeLb();
     });
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && !lb.hidden) closeLb();
+      if (lb.hidden) return;
+      if (e.key === "Escape") closeLb();
+      else if (e.key === "ArrowLeft" && lbPrev) step(-1);
+      else if (e.key === "ArrowRight" && lbNext) step(1);
     });
   }
 
-  /* ---------- 7. 页脚年份 ---------- */
+  /* ---------- 8. 页脚年份 ---------- */
   const year = document.getElementById("year");
   if (year) year.textContent = new Date().getFullYear();
 })();

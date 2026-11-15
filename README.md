@@ -98,54 +98,50 @@ dachengad/                     ← 仓库根目录
 
 ## 5. 图片规范
 
-线上图片按用途分目录：品牌资产在 `assets/img/brand/`，案例图在 `assets/img/cases/`（大图在其 `full/` 子目录）。
+作品图统一放在 `assets/img/work/`，按「大类 / 作品」两级归档。每个作品一个文件夹，缩略图与高清图放在同一个文件夹里，各含 jpg + webp 两种格式：
+
+```
+assets/img/work/
+├─ shop/          门头招牌
+├─ board/         宣传栏 · 文化长廊
+├─ site/          围挡 · 安全防护
+├─ identity/      村口标识 · 立体字
+├─ landscape/     景观 · 装饰工程
+└─ expo/          展会特装
+   └─ shop-shangpin/
+      ├─ thumb.jpg / thumb.webp   列表缩略图（长边 680，q80）
+      └─ full.jpg  / full.webp    灯箱高清图（长边 1600，q84）
+```
+
+品牌资产仍在 `assets/img/brand/`：
 
 | 文件 | 内容 | 尺寸 |
 | --- | --- | --- |
-| `case-luosifen` | 螺小转门头喷绘 | 960×720（+ 480 宽小图） |
-| `case-pingpong` | 谦望乒乓门头灯箱 | 960×720（+ 480 宽小图） |
-| `case-pennant` | 烫金锦旗 | 960×1280（+ 480 宽小图） |
-| `case-board` | 校园宣传栏 | 960×720（+ 480 宽小图） |
-| `case-culture` | 医院文化墙 | 960×720（+ 480 宽小图） |
-| `case-kids` | 幼儿园立体标识 | 960×720（+ 480 宽小图） |
-| `case-expo-1/2/3` | 展会特装 | 960×720（+ 480 宽小图） |
 | `wechat-main` / `wechat-second` | 微信头像 | 96×96 |
 | `og-cover` | 社交分享封面 | 1200×630 |
+| `icon-192` / `icon-512` / `apple-touch-icon` | 站点图标 | 192 / 512 / 180 |
 
 处理规则：
 
-1. **不裁剪构图**，只做等比缩放；需要适配版式时用 CSS `object-fit` 处理
+1. **不裁剪构图**，只做等比缩放；版式适配交给 CSS `object-fit`
 2. 手机号、门头 TEL、水印面板（工程记录 / 今日水印）一律**高斯模糊**，不裁掉
-3. 每张出两档宽度（960 / 480），各自导出 `jpg`（q76）与 `webp`（q68），页面用 `<picture>` + `srcset` 按视口取用
-4. 案例图统一 4:3，`loading="lazy"` + 显式 `width/height` 防止布局抖动
+3. 每张出两档长边（680 / 1600），各自导出 `jpg` 与 `webp`，页面用 `<picture>` 取用
+4. 缩略图 `loading="lazy"` + 显式 `width/height`，防止布局抖动
 5. 微信头像只用于 36px 展示，出 96px（2x）即可；带 `preload` + `fetchpriority="high"` 优先加载
 
-### 案例大图（点击后加载）
+### 作品大图（点击后加载）
 
-- 列表里是 960 / 480 两档缩略图，滚到才请求，首屏不背这个包袱
-- 点击案例 → 灯箱先把**已缓存的缩略图**铺满并轻微模糊，再从 `assets/img/full/` 拉 1280 宽 webp，加载完淡入覆盖
-- `full/` 目录只在点击时才被访问，命名与列表图一致（`case-xxx.webp`，约 30–230KB/张，合计约 1MB）
-- 支持 ESC、点遮罩、关闭按钮退出；案例卡可 Tab 聚焦、回车/空格打开
+- 列表只请求同目录下的 `thumb`，滚到才加载，首屏不背高清图的包袱
+- 点击作品 → 灯箱先把**已缓存的缩略图**铺满并轻微模糊，再取同目录 `full.webp`（不支持时回退 `full.jpg`），加载完淡入覆盖
+- `full` 文件只在点击时才被访问，约 100–400KB/张
+- 支持 ESC、点遮罩、关闭按钮退出；作品集页还支持左右方向键 / 按钮翻页
 
-### 替换预留展示位
+### 新增作品
 
-案例区最后三个 `.tile--empty` 是留给「广告设计成品图」的。补图时先按上面规则导出两档缩略图 + `full/` 大图，再把整块替换成：
-
-```html
-<figure class="tile">
-  <picture>
-    <source type="image/webp" sizes="(max-width: 680px) 100vw, (max-width: 900px) 50vw, 33vw"
-      srcset="assets/img/cases/case-design-1-480.webp 480w, assets/img/cases/case-design-1.webp 960w" />
-    <img src="assets/img/cases/case-design-1.jpg" width="960" height="720" loading="lazy" decoding="async"
-      sizes="(max-width: 680px) 100vw, (max-width: 900px) 50vw, 33vw"
-      srcset="assets/img/cases/case-design-1-480.jpg 480w, assets/img/cases/case-design-1.jpg 960w"
-      alt="图片说明" />
-  </picture>
-  <figcaption><span>广告设计</span>项目名称</figcaption>
-</figure>
-```
-
-大图按 `assets/img/cases/full/case-design-1.webp` 放一张 1280 宽同名文件，点击灯箱会自动取用。
+1. 在对应大类下新建作品文件夹（英文短名，如 `shop-xxx`）
+2. 按上面的规则导出 `thumb` / `full` 各两档格式
+3. 首页精选：复制一个 `.tile`，`data-full` 指向 `assets/img/work/<大类>/<作品>/full`
+4. 作品集页：在 `works.html` 复制一个 `.shot`，改 `data-cat`、`data-full`、图片路径与说明即可
 
 ---
 
