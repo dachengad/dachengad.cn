@@ -5,8 +5,8 @@
 纯静态站点，零构建、零依赖，推送到 `main` 即自动部署。
 
 - 仓库：<https://github.com/dachengad/dachengad.cn>
-- 线上预览：<https://dachengad.github.io/dachengad.cn/>
-- 正式域名：`dachengad.cn`（待绑定，见「上线待办」）
+- 正式域名：<https://dachengad.cn/>（已绑定）
+- 默认地址：<https://dachengad.github.io/dachengad.cn/>
 
 ---
 
@@ -149,13 +149,12 @@ npx serve .
 
 首次部署需在仓库 `Settings → Pages → Source` 选择 `GitHub Actions`（已启用）。
 
-### 绑定自有域名
+### 自有域名
 
-1. 仓库 `Settings → Pages → Custom domain` 填 `dachengad.cn`，勾选 `Enforce HTTPS`
-2. DNS 添加记录（域名服务商处）：
-   - `A` → `185.199.108.153` / `185.199.109.153` / `185.199.110.153` / `185.199.111.153`
-   - `www` 用 `CNAME` → `dachengad.github.io`
-3. 生效后把页面里 `canonical` / `og:url` / `sitemap.xml` 的域名确认改为 `https://dachengad.cn/`
+`dachengad.cn` 已绑定并开启 HTTPS，`canonical` / `og:url` / `sitemap.xml` 均指向该域名。DNS 备查：
+
+- `A` → `185.199.108.153` / `185.199.109.153` / `185.199.110.153` / `185.199.111.153`
+- `www` → `CNAME` → `dachengad.github.io`
 
 ---
 
@@ -170,24 +169,15 @@ npx serve .
 - `sitemap.xml`（单页）
 - `favicon.ico` / `apple-touch-icon` / PWA manifest
 
-### 提交搜索引擎（需人工操作）
-
-1. [百度搜索资源平台](https://ziyuan.baidu.com) 添加站点 → 验证 → 提交 `https://dachengad.cn/sitemap.xml`
-2. 「站点属性」填写站点名称「大成广告装饰」并上传 logo → 搜索结果标题旁显示图标
-3. 想出现企业名片 / 电话卡，需走「企业名片」营业执照认证
-4. 谷歌：[Google Search Console](https://search.google.com/search-console) 添加资源 → 提交 sitemap
-
-> 百度结果里的「站点多子链」需要多个可抓取页面 + 站点权重积累，单页站点一般不会出现；要争取这个位置，可把服务 / 案例 / 关于 / 联系拆成独立页面。
+> 搜索引擎提交暂不做。百度结果里的「站点多子链」需要多个可抓取页面 + 站点权重积累，单页站点一般不会出现；后续要争取这个位置，需先拆多页再提交站点。
 
 ---
 
 ## 9. 上线待办
 
-- [ ] 绑定 `dachengad.cn` 并开启 HTTPS
 - [ ] 补 ICP 备案号并写入页脚
 - [ ] 替换 3 个预留展示位为真实广告设计成品图
-- [ ] 百度 / 谷歌站长平台验证与 sitemap 提交
-- [ ] 视情况把单页拆成多页（提升抓取面与子链机会）
+- [ ] 视情况把单页拆成多页
 
 ---
 
