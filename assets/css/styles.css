@@ -189,22 +189,20 @@ a { color: inherit; text-decoration: none; }
   margin-right: auto;
   color: #fff;
 }
-.brand__mark {
-  display: inline-block;
-  padding: 5px 9px 4px;
-  background: var(--accent);
-  color: #fff;
-  font-size: 18px;
-  font-weight: 900;
-  letter-spacing: 0.1em;
-  line-height: 1.15;
-  border-radius: 2px;
+.brand__avatar {
+  display: block;
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
-.brand__sub {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.3em;
-  color: rgba(255, 255, 255, 0.86);
+.brand__name {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
 }
 
 .nav {
@@ -800,6 +798,40 @@ body.nav-open { overflow: hidden; }
   padding-block: 36px;
   font-size: 12.5px;
 }
+
+.foot__links {
+  padding-bottom: 26px;
+  margin-bottom: 26px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+}
+.foot__links-title {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: rgba(244, 241, 234, 0.42);
+  margin-bottom: 14px;
+}
+.foot__links ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 44px;
+}
+.foot__links li {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.foot__links a {
+  font-size: 14px;
+  color: rgba(244, 241, 234, 0.84);
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+.foot__links a:hover { color: #fff; border-bottom-color: var(--accent); }
+.foot__links span {
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: rgba(244, 241, 234, 0.4);
+}
 .foot__in {
   display: flex;
   flex-wrap: wrap;
@@ -965,7 +997,7 @@ body.lb-open { overflow: hidden; }
   :root { --head-h: 64px; }
 
   .head__call { display: none; }
-  .brand__sub { display: none; }
+  .brand__name { font-size: 15px; }
 
   .hero {
     min-height: 92svh;
