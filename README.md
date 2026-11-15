@@ -52,8 +52,11 @@ dachengad/                     ← 仓库根目录
 ├─ index.html                  整站页面（含 SEO meta 与 JSON-LD）
 ├─ assets/
 │   ├─ css/styles.css          全部样式，主题色集中在 :root
-│   ├─ js/main.js              滚动进场、固定导航、系统地图唤起
-│   └─ img/                    处理后的图片（jpg + webp 双份）
+│   ├─ js/main.js              导航、滚动进场、系统地图唤起、案例大图
+│   └─ img/
+│       ├─ brand/              品牌资产：logo、图标、微信头像、分享封面
+│       └─ cases/              案例图（960 / 480 两档，jpg + webp）
+│           └─ full/           点击后加载的 1280 宽大图（仅 webp）
 ├─ favicon.ico                 浏览器标签图标（蓝色微信头像）
 ├─ site.webmanifest            PWA / 添加到桌面图标配置
 ├─ robots.txt
@@ -92,38 +95,54 @@ dachengad/                     ← 仓库根目录
 
 ## 5. 图片规范
 
-线上图片统一放在 `assets/img/`，命名与用途：
+线上图片按用途分目录：品牌资产在 `assets/img/brand/`，案例图在 `assets/img/cases/`（大图在其 `full/` 子目录）。
 
 | 文件 | 内容 | 尺寸 |
 | --- | --- | --- |
-| `case-luosifen` | 螺小转门头喷绘 | 1280×960 |
-| `case-pingpong` | 谦望乒乓门头灯箱 | 1280×960 |
-| `case-pennant` | 烫金锦旗 | 1280×1707 |
-| `case-board` | 校园宣传栏 | 1280×960 |
-| `case-culture` | 医院文化墙 | 1280×960 |
-| `case-kids` | 幼儿园立体标识 | 1280×960 |
-| `case-expo-1/2/3` | 展会特装 | 1280×960 |
-| `wechat-main` / `wechat-second` | 微信头像 | 176×176 |
+| `case-luosifen` | 螺小转门头喷绘 | 960×720（+ 480 宽小图） |
+| `case-pingpong` | 谦望乒乓门头灯箱 | 960×720（+ 480 宽小图） |
+| `case-pennant` | 烫金锦旗 | 960×1280（+ 480 宽小图） |
+| `case-board` | 校园宣传栏 | 960×720（+ 480 宽小图） |
+| `case-culture` | 医院文化墙 | 960×720（+ 480 宽小图） |
+| `case-kids` | 幼儿园立体标识 | 960×720（+ 480 宽小图） |
+| `case-expo-1/2/3` | 展会特装 | 960×720（+ 480 宽小图） |
+| `wechat-main` / `wechat-second` | 微信头像 | 96×96 |
 | `og-cover` | 社交分享封面 | 1200×630 |
 
 处理规则：
 
 1. **不裁剪构图**，只做等比缩放；需要适配版式时用 CSS `object-fit` 处理
 2. 手机号、门头 TEL、水印面板（工程记录 / 今日水印）一律**高斯模糊**，不裁掉
-3. 每张同时导出 `jpg`（quality 82）与 `webp`（quality 80），页面用 `<picture>` 引用
+3. 每张出两档宽度（960 / 480），各自导出 `jpg`（q76）与 `webp`（q68），页面用 `<picture>` + `srcset` 按视口取用
 4. 案例图统一 4:3，`loading="lazy"` + 显式 `width/height` 防止布局抖动
+5. 微信头像只用于 36px 展示，出 96px（2x）即可；带 `preload` + `fetchpriority="high"` 优先加载
+
+### 案例大图（点击后加载）
+
+- 列表里是 960 / 480 两档缩略图，滚到才请求，首屏不背这个包袱
+- 点击案例 → 灯箱先把**已缓存的缩略图**铺满并轻微模糊，再从 `assets/img/full/` 拉 1280 宽 webp，加载完淡入覆盖
+- `full/` 目录只在点击时才被访问，命名与列表图一致（`case-xxx.webp`，约 30–230KB/张，合计约 1MB）
+- 支持 ESC、点遮罩、关闭按钮退出；案例卡可 Tab 聚焦、回车/空格打开
 
 ### 替换预留展示位
 
-案例区最后三个 `.tile--empty` 是留给「广告设计成品图」的。补图时把整块替换成：
+案例区最后三个 `.tile--empty` 是留给「广告设计成品图」的。补图时先按上面规则导出两档缩略图 + `full/` 大图，再把整块替换成：
 
 ```html
 <figure class="tile">
-  <img src="assets/img/case-design-1.jpg" width="1280" height="960"
-       loading="lazy" decoding="async" alt="图片说明" />
+  <picture>
+    <source type="image/webp" sizes="(max-width: 680px) 100vw, (max-width: 900px) 50vw, 33vw"
+      srcset="assets/img/cases/case-design-1-480.webp 480w, assets/img/cases/case-design-1.webp 960w" />
+    <img src="assets/img/cases/case-design-1.jpg" width="960" height="720" loading="lazy" decoding="async"
+      sizes="(max-width: 680px) 100vw, (max-width: 900px) 50vw, 33vw"
+      srcset="assets/img/cases/case-design-1-480.jpg 480w, assets/img/cases/case-design-1.jpg 960w"
+      alt="图片说明" />
+  </picture>
   <figcaption><span>广告设计</span>项目名称</figcaption>
 </figure>
 ```
+
+大图按 `assets/img/cases/full/case-design-1.webp` 放一张 1280 宽同名文件，点击灯箱会自动取用。
 
 ---
 

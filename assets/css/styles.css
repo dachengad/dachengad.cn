@@ -4,8 +4,6 @@
 
 :root {
   --ink: #101012;
-  --ink-2: #1b1b1f;
-  --ink-3: #2a2a30;
   --paper: #f7f5f0;
   --paper-2: #ece8e0;
   --text: #17171a;
@@ -112,7 +110,6 @@ a { color: inherit; text-decoration: none; }
 }
 
 .section__head--light .section__title { color: var(--text-invert); }
-.section__head--light .section__lede { color: var(--text-invert-soft); }
 
 /* ---------- 按钮 ---------- */
 
@@ -154,7 +151,7 @@ a { color: inherit; text-decoration: none; }
   color: var(--text);
   border-bottom: 1px solid var(--accent);
   padding-bottom: 2px;
-  transition: color 0.2s var(--ease), gap 0.2s var(--ease);
+  transition: color 0.2s var(--ease);
 }
 .link:hover { color: var(--accent); }
 
@@ -427,11 +424,19 @@ a { color: inherit; text-decoration: none; }
   background: #d9d5cc;
 }
 
+.tile[data-full] { cursor: zoom-in; }
+
+.tile picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .tile img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.8s var(--ease), filter 0.5s var(--ease);
+  transition: transform 0.8s var(--ease);
 }
 .tile:hover img { transform: scale(1.05); }
 
@@ -600,22 +605,21 @@ a { color: inherit; text-decoration: none; }
   font-size: 14px;
   color: var(--text-invert-soft);
 }
-.contact__alt a {
-  font-weight: 700;
-  color: rgba(244, 241, 234, 0.94);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-  padding-bottom: 1px;
-  transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
-}
-.contact__alt a:hover { color: var(--accent-soft); border-color: var(--accent-soft); }
 
-.contact__link {
-  color: rgba(244, 241, 234, 0.92);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.26);
+/* 深色区文字链接：备用电话、地图入口、邮箱 */
+.contact__alt a,
+.contact__link,
+.maps a {
+  color: rgba(244, 241, 234, 0.93);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.28);
   padding-bottom: 1px;
   transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
 }
-.contact__link:hover { color: var(--accent-soft); border-color: var(--accent-soft); }
+.contact__alt a:hover,
+.contact__link:hover,
+.maps a:hover { color: var(--accent-soft); border-color: var(--accent-soft); }
+
+.contact__alt a { font-weight: 700; }
 
 .contact__info dd .contact__link {
   display: inline-block;
@@ -635,14 +639,7 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: 0.14em;
   color: var(--accent-soft);
 }
-.maps a {
-  font-size: 14px;
-  color: rgba(244, 241, 234, 0.92);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.26);
-  padding-bottom: 1px;
-  transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
-}
-.maps a:hover { color: var(--accent-soft); border-color: var(--accent-soft); }
+.maps a { font-size: 14px; }
 
 .wx {
   display: grid;
@@ -739,6 +736,90 @@ a { color: inherit; text-decoration: none; }
 }
 .callbar span { font-size: 13px; font-weight: 700; letter-spacing: 0.04em; }
 .callbar strong { font-size: 16px; font-weight: 800; letter-spacing: 0.02em; }
+
+/* ---------- 案例大图 ---------- */
+
+.lb {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(14px, 3vw, 40px);
+  background: rgba(6, 6, 8, 0.95);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  transition: opacity 0.28s var(--ease);
+}
+.lb[hidden] { display: none; }
+.lb.is-open { opacity: 1; }
+
+.lb__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  max-width: 100%;
+}
+
+.lb__fig {
+  position: relative;
+  margin: 0;
+  line-height: 0;
+}
+
+.lb__img {
+  display: block;
+  max-width: min(1280px, 92vw);
+  max-height: 82vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity 0.4s var(--ease);
+}
+.lb__img.is-ready { opacity: 1; }
+
+/* 先显示已缓存的缩略图，大图加载完成后淡入覆盖 */
+.lb__thumb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: blur(1.5px);
+  transition: opacity 0.3s var(--ease);
+}
+.lb__thumb.is-hidden { opacity: 0; }
+
+.lb__cap {
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: rgba(244, 241, 234, 0.66);
+  text-align: center;
+}
+
+.lb__close {
+  position: absolute;
+  top: clamp(12px, 2vw, 24px);
+  right: clamp(12px, 2vw, 24px);
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+  line-height: 1;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+.lb__close:hover { background: rgba(255, 255, 255, 0.16); border-color: #fff; }
+
+body.lb-open { overflow: hidden; }
 
 /* ---------- 入场动画 ---------- */
 
